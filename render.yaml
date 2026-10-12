@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: devdecoded-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate && gunicorn DevDecoded_back.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        sync: false
+      - key: DATABASE_NAME
+        sync: false
+      - key: DATABASE_USER
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: DATABASE_HOST
+        sync: false
+      - key: DATABASE_PORT
+        sync: false
+      - key: DATABASE_SSL_CA
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
